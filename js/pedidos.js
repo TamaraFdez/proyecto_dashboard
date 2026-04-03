@@ -1,3 +1,5 @@
+// PEDIDOS
+
 const data = document.getElementById("data");
 const btnAdd = document.getElementById("btn-add");
 const form = document.getElementById("form");
@@ -5,22 +7,34 @@ const nopedidos = document.getElementById("nohaypedidos");
 const tabla = document.getElementById("tablaPedidos");
 const tbody = tabla.querySelector("tbody");
 
-const pedidos = [];
+// Carga inicial desde localStorage
+let pedidos = Storage.getAll();
 
+// INICIAR
+actualizarVisibilidad();
+renderTabla();
+
+// EVENTOS
 data.addEventListener("submit", (e) => {
   e.preventDefault();
   const datos = new FormData(data);
   const pedido = Object.fromEntries(datos);
   pedido.id = crypto.randomUUID();
-  pedidos.push(pedido);
+  // guardar y devolver array actualizado
+  pedidos = Storage.add(pedido); 
+  // refrescar vista
   actualizarVisibilidad();
   renderTabla();
-  form.reset();
+  data.reset();
+  form.classList.add("hidden");
 });
+
+//Evento para hacer aparecer y desaparecer el formulario
 btnAdd.addEventListener("click", () => {
   form.classList.toggle("hidden");
 });
 
+// FUNCIONES
 function actualizarVisibilidad() {
   if (pedidos.length === 0) {
     nopedidos.classList.remove("hidden");
@@ -28,11 +42,10 @@ function actualizarVisibilidad() {
     nopedidos.classList.add("hidden");
   }
 }
+
 function renderTabla() {
- 
   tbody.innerHTML = "";
 
- 
   if (pedidos.length === 0) {
     tabla.classList.add("hidden");
     return;
@@ -40,25 +53,20 @@ function renderTabla() {
 
   tabla.classList.remove("hidden");
 
- 
   pedidos.forEach((pedido) => {
     const fila = document.createElement("tr");
-
-    const campos = [
-        "id",
-      "origen",
-      "destino",
-      "paciente",
-      "tipo",
-      "temp-min",
-      "temp-max"
-    ];
+    const campos = ["id", "origen", "destino", "paciente", "tipo", "temp-min", "temp-max"];
     campos.forEach((campo) => {
       const celda = document.createElement("td");
-      celda.textContent = pedido[campo] || "*";
+      // Truncar UUID para legibilidad
+      if (campo === "id") {
+        celda.textContent = pedido[campo].slice(0, 8) + "…";
+        celda.title = pedido[campo];
+      } else {
+        celda.textContent = pedido[campo] || "—";
+      }
       fila.appendChild(celda);
     });
-
     tbody.appendChild(fila);
   });
 }
