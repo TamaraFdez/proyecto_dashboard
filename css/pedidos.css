@@ -190,3 +190,17 @@
 .hidden {
   display: none !important;
 }
+.btn-eliminar {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.btn-eliminar:hover {
+  background: #c9302c;
+}
+

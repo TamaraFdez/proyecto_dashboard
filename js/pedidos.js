@@ -67,6 +67,23 @@ function renderTabla() {
       }
       fila.appendChild(celda);
     });
+    const celdaEliminar = document.createElement("td");
+    const btnEliminar = document.createElement("button");
+
+    btnEliminar.textContent = "Eliminar";
+    btnEliminar.classList.add("btn-eliminar");
+
+    btnEliminar.addEventListener("click", () => {
+      // eliminar del localStorage
+      pedidos = Storage.remove(pedido.id); 
+      actualizarVisibilidad();
+      renderTabla(); 
+      renderResumen(); 
+    });
+
+    celdaEliminar.appendChild(btnEliminar);
+    fila.appendChild(celdaEliminar);
+
     tbody.appendChild(fila);
   });
 }
