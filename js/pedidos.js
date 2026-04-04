@@ -21,7 +21,7 @@ data.addEventListener("submit", (e) => {
   const pedido = Object.fromEntries(datos);
   pedido.id = crypto.randomUUID();
   // guardar y devolver array actualizado
-  pedidos = Storage.add(pedido); 
+  pedidos = Storage.add(pedido);
   // refrescar vista
   actualizarVisibilidad();
   renderTabla();
@@ -55,7 +55,15 @@ function renderTabla() {
 
   pedidos.forEach((pedido) => {
     const fila = document.createElement("tr");
-    const campos = ["id", "origen", "destino", "paciente", "tipo", "temp-min", "temp-max"];
+    const campos = [
+      "id",
+      "origen",
+      "destino",
+      "paciente",
+      "tipo",
+      "temp-min",
+      "temp-max",
+    ];
     campos.forEach((campo) => {
       const celda = document.createElement("td");
       // Truncar UUID para legibilidad
@@ -75,10 +83,10 @@ function renderTabla() {
 
     btnEliminar.addEventListener("click", () => {
       // eliminar del localStorage
-      pedidos = Storage.remove(pedido.id); 
+      pedidos = Storage.remove(pedido.id);
       actualizarVisibilidad();
-      renderTabla(); 
-      renderResumen(); 
+      renderTabla();
+      renderResumen();
     });
 
     celdaEliminar.appendChild(btnEliminar);
@@ -87,5 +95,3 @@ function renderTabla() {
     tbody.appendChild(fila);
   });
 }
-
-
