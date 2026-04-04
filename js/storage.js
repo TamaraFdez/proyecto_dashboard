@@ -1,3 +1,5 @@
+
+// Le pedí a la IA que me hiciera ejemplos para poder llenar la tabla con cosas un poco más bonitas
 const PEDIDOS_MOCK = [
   { id: crypto.randomUUID(), origen: "Clínica Sol", destino: "Lab Central",
     paciente: "P-001", tipo: "sangre", "temp-min": "2", "temp-max": "8" },

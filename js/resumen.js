@@ -63,6 +63,7 @@ function renderResumen() {
     conteo[tipo]++;
   });
 
+  // Spread ...le pregunte el nombre a la IA y una explicacion de como funcionaba
   const max = Math.max(...Object.values(conteo), 1);
 
   TIPOS.forEach((tipo) => {
@@ -81,14 +82,14 @@ function renderResumen() {
     container.appendChild(row);
   });
 
-  // Animacion de entrada
+  // Animacion de entrada, uso de requestAnimationFrame por reocmendacion de Claude
   requestAnimationFrame(() => {
     container.querySelectorAll(".bar-fill").forEach((bar) => {
       bar.style.width = bar.dataset.target + "%";
     });
   });
 }
-// Actualiza el resumen si se modifican pedidos desde otra pestaña
+// Actualizar el resumen si se modifican pedidos desde otra pestaña
 window.addEventListener("storage", (e) => {
   if (e.key === "dashboard_pedidos") {
     renderResumen();
